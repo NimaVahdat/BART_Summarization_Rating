@@ -6,14 +6,14 @@ from transformers import AutoTokenizer
 class DataProcessor:
     def __init__(
         self,
-        dataset: str = None,
+        dataset_name: str = None,
         category: str = "raw_review_All_Beauty",
-        tokenizer: str = None,
+        tokenizer: AutoTokenizer = None,
         split: float = 0.2,
     ) -> None:
         # Load the full dataset
         full_data = load_dataset(
-            dataset, category, split="full", trust_remote_code=True
+            dataset_name, category, split="full", trust_remote_code=True
         )
 
         # Find the minimum rating in the dataset
@@ -32,7 +32,7 @@ class DataProcessor:
         self.dataset_val = full_data_split["test"]
 
         # Initialize the tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer)
+        self.tokenizer = tokenizer
 
     def _preprocess_function(self, examples):
         # Tokenize the text inputs
