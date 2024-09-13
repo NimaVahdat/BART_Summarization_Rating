@@ -1,0 +1,3 @@
+dataset_name: McAuley-Lab/Amazon-Reviews-2023
+category: raw_review_All_Beauty
+tokenizer_info: facebook/bart-base
