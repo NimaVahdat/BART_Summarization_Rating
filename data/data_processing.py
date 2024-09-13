@@ -1,6 +1,9 @@
 import torch
 from datasets import load_dataset
 from transformers import AutoTokenizer
+import evaluate
+
+from utils import three_sentence_summary
 
 
 class DataProcessor:
@@ -15,13 +18,6 @@ class DataProcessor:
         full_data = load_dataset(
             dataset_name, category, split="full", trust_remote_code=True
         )
-
-        # Find the minimum rating in the dataset
-        min_rating = torch.inf
-        for entry in full_data:
-            if entry["rating"] < min_rating:
-                min_rating = entry["rating"]
-        print(f"Minimum rating in the dataset: {min_rating}")
 
         # Filter out examples with very short titles to improve the quality of summaries
         full_data = full_data.filter(lambda x: len(x["title"].split()) > 3)
@@ -40,7 +36,7 @@ class DataProcessor:
         model_inputs = self.tokenizer(inputs, max_length=512, truncation=True)
 
         # Tokenize the titles to use as labels for the model
-        labels = self.tokenizer(examples["title"], max_length=128, truncation=True)
+        labels = self.tokenizer(examples["title"], max_length=30, truncation=True)
         model_inputs["labels"] = labels["input_ids"]
 
         # Convert ratings to integer and add to model inputs
@@ -71,7 +67,11 @@ class DataProcessor:
             val_dataset = self._remove_unnecessary_columns(val_dataset)
             return train_dataset, val_dataset
 
-
-# Example usage:
-# data_processor = DataProcessor("McAuley-Lab/Amazon-Reviews-2023", tokenizer="facebook/bart-base")
-# train_data, val_data = data_processor()
+    def get_baseline(self):
+        # Compute baseline ROUGE score by summarizing validation texts and comparing to titles.
+        rouge_score = evaluate.load("rouge")
+        summaries = [three_sentence_summary(text) for text in self.dataset_val["text"]]
+        score = rouge_score.compute(
+            predictions=summaries, references=self.dataset_val["title"]
+        )
+        return score
