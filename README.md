@@ -1,6 +1,5 @@
 # Review Summarization and Rating with BART
 
-## Overview
 This project leverages a fine-tuned BART model to perform multitask learning for Amazon review summarization and rating prediction. The model is designed to generate concise summaries of review texts and predict ratings based on the provided content. To enhance training efficiency, Hugging Face's **Accelerate** is used for distributed training, enabling multi-GPU support and mixed-precision training.
 
 ### Project Components
