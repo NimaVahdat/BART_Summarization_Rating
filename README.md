@@ -1,14 +1,14 @@
-### Review Summarization and Rating with BART
+# Review Summarization and Rating with BART
 
-#### Overview
+## Overview
 This project leverages a fine-tuned BART model to perform multitask learning for Amazon review summarization and rating prediction. The model is designed to generate concise summaries of review texts and predict ratings based on the provided content. To enhance training efficiency, Hugging Face's **Accelerate** is used for distributed training, enabling multi-GPU support and mixed-precision training.
 
-#### Project Components
+## Project Components
 - **Model Training**: Fine-tuning BART for multitask learning using an Amazon review dataset. Distributed training is handled by Hugging Face's **Accelerate** to scale across multiple GPUs.
 - **Inference API**: A Flask-based API integrated with a Gradio interface for easy review submission and result display.
 - **Web Interface**: A user-friendly web interface to interact with the Gradio app embedded in a Flask web page.
 
-#### Features
+## Features
 - **Summarization**: Generates a concise summary of the review text.
 - **Rating Prediction**: Predicts the rating (1-5 stars) based on the review content.
 - **Web Interface**: Integrated Gradio app for real-time interaction.
