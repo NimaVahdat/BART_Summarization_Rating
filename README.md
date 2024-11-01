@@ -19,7 +19,9 @@ This project leverages a fine-tuned BART model to perform multitask learning for
 
 Here's a demonstration of the Gradio app in action:
 
-![Gradio Demo](https://github.com/NimaVahdat/BART-Summarization-Rating/blob/main/Demo.gif)
+<div align="center">
+  <img src="https://raw.githubusercontent.com/NimaVahdat/BART-Summarization-Rating/main/Demo.gif">
+</div>
 
 ## Getting Started
 
